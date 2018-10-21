@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Nickify</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='main.css') }}" /> -->
+    <!-- <script type="text/javascript" src="{{ url_for('static', filename='main.js') }}"></script> -->
+    <style>
+        img {
+            max-height: 800px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <div class="row">
+            <div class="col-3">
+                <h3>Try your own photos!</h3>
+                <form method="post" enctype="multipart/form-data">
+                    <input type="file" name="file" class="form-control-file" onchange="this.form.submit();">
+                </form>
+                <h3 class="mt-2">Example Photos</h3>
+                <div class="list-group">
+                    <a href="/?filename=family.jpg" class="list-group-item list-group-item-action">Family</a>
+                    <a href="/?filename=group.jpg" class="list-group-item list-group-item-action">Group</a>
+                    <a href="/?filename=faces.jpg" class="list-group-item list-group-item-action">Faces</a>
+                </div>
+                {% if filename %}
+                <h3 class="mt-2">Image Actions</h3>
+                <div class="d-flex flex-column">
+                    <div class="p-2">
+                        <a class="btn btn-secondary btn-block" href="/?filename={{ filename }}">Original</a>
+                    </div>
+                    <form class="p-2" method="post" action="/swapify/{{ filename }}">
+                        <input type="submit" class="btn btn-primary btn-block" value="Swapify">
+                    </form>
+                    <form class="p-2" method="post" action="/nickify/{{ filename }}">
+                        <input type="submit" class="btn btn-primary btn-block" value="Nickify">
+                    </form>
+                    <form class="p-2" method="post" action="/smilify/{{ filename }}">
+                        <input type="submit" class="btn btn-primary btn-block" value="Smilify">
+                    </form>
+                    <form class="p-2" method="post" action="/kittify/{{ filename }}">
+                        <input type="submit" class="btn btn-primary btn-block" value="Kittify">
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+            <div class="col-9">
+                {% if filename %}
+                {% if transformed_filename %}
+                <img class="img-fluid" src="uploads/{{ transformed_filename }}" alt="uploaded image" />
+                {% else %}
+                <img class="img-fluid" src="uploads/{{ filename }}" alt="uploaded image" />
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

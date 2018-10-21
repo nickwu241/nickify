@@ -1,0 +1,5 @@
+.vscode
+__pycache__
+.terraform
+terraform.tfstate*
+CREDENTIALS_FILE.json
