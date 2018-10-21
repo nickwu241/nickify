@@ -8,6 +8,7 @@ clarifai = "*"
 pillow = "*"
 flask = "*"
 werkzeug = "*"
+requests = "*"
 
 [dev-packages]
 rope = "*"

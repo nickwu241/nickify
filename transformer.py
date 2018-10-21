@@ -27,7 +27,7 @@ def swap_faces(input_file, with_image=None):
         cropped = with_image
     else:
         cropped = shuffle_cropped(cropped)
-    return replace(im, boxes, cropped)
+    return replace(im, boxes, cropped), len(boxes)
 
 def replace(im, boxes, cropped):
     if isinstance(cropped, list):
