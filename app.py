@@ -84,4 +84,4 @@ def image_transform(filename, op, prefix=''):
     return redirect(url_for('index', filename=filename, transformed_filename=transformed_filename))
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', port=os.environ.get('PORT', 5000))
